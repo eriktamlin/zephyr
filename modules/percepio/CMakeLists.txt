@@ -102,14 +102,14 @@ if(CONFIG_PERCEPIO_DFM)
 
   set(DFM_DIR ${ZEPHYR_CURRENT_MODULE_DIR}/DFM)
 
-  zephyr_library_sources_ifdef(
-    CONFIG_PERCEPIO_DFM
+  zephyr_library_sources(
     ${DFM_DIR}/dfm.c
     ${DFM_DIR}/dfmAlert.c
     ${DFM_DIR}/dfmCloud.c
     ${DFM_DIR}/dfmEntry.c
     ${DFM_DIR}/dfmSession.c
     ${DFM_DIR}/dfmStorage.c
+    ${DFM_DIR}/dfmRetainedMemory.c
     ${DFM_DIR}/kernelports/Zephyr/dfmKernelPort.c
     )
 
@@ -151,6 +151,12 @@ if(CONFIG_PERCEPIO_DFM)
     zephyr_include_directories(
       ${DFM_DIR}/kernelports/Zephyr/cloudports/Serial/config/
       ${DFM_DIR}/kernelports/Zephyr/cloudports/Serial/include/
+    )
+  endif()
+
+  if(CONFIG_PERCEPIO_DFM_CFG_RETAINED_MEMORY)
+    zephyr_library_sources(
+      ${DFM_DIR}/kernelports/Zephyr/dfmRetainedMemoryPort.c
     )
   endif()
 
